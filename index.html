@@ -43,7 +43,7 @@
 
     /* ===== HERO ===== */
     .hero {
-      background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 50%, #93c5fd 100%);
+      background: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #3b82f6 100%);
       color: #ffffff;
       padding: 80px 24px 60px;
       text-align: center;
@@ -1199,6 +1199,84 @@
         <div class="metric-card">
           <div class="num">100%</div>
           <div class="label">คนที่บ้านรับ LINE<br>ทุกครั้งที่บันทึก</div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ===== DATA DASHBOARD ===== -->
+      <div class="section-intro">
+        <h2>📊 Iterate: Analytics Dashboard</h2>
+        <p>จาก "แค่บันทึกข้อมูล" สู่ "เข้าใจพฤติกรรมตัวเอง" ผ่าน data visualization</p>
+      </div>
+
+      <div class="solution-card">
+        <h3>🔍 ทำไมต้องมี Dashboard?</h3>
+        <p class="subtitle">หลังใช้งานไปสักพัก เริ่มสงสัยว่า "เราถึงที่ทำงานกี่โมงโดยเฉลี่ย?" "ถึงคอนโดกี่โมง?" — ข้อมูลมีอยู่ใน Google Sheets แล้ว แต่ไม่สามารถมองเห็น pattern ได้</p>
+
+        <div class="dt-step green" style="margin: 20px 0;">
+          <div class="step-label">Design Thinking: Observe → Insight</div>
+          <div class="step-content">
+            <strong>Observation:</strong> มีข้อมูลการจอดรถสะสมหลายเดือน แต่ดูแค่ตารางใน Sheets ไม่เห็นภาพรวม
+            <br><br>
+            <strong>Insight:</strong> "ถ้าเห็นเป็นกราฟ จะรู้ว่าเราถึงที่ทำงานเฉลี่ยกี่โมง ถึงคอนโดกี่โมง ช่วยวางแผนเวลาได้ดีขึ้น"
+            <br><br>
+            <strong>Solution:</strong> สร้าง Live Dashboard อ่านข้อมูลจาก Google Sheets แบบ real-time แสดงเป็นกราฟและ metrics
+          </div>
+        </div>
+
+        <div class="tags">
+          <span class="tag blue">React + Vite</span>
+          <span class="tag blue">Recharts</span>
+          <span class="tag green">Google Sheets CSV</span>
+          <span class="tag orange">Auto Refresh</span>
+          <span class="tag">Data Visualization</span>
+        </div>
+
+        <ul class="features" style="margin-top: 20px;">
+          <li><strong>⏰ เวลาที่บันทึกเฉลี่ย</strong> — แสดงว่าถึงคอนโดโดยเฉลี่ยกี่โมง ถึงที่ทำงานกี่โมง แยกตามสถานที่</li>
+          <li><strong>📈 Trend เวลาที่บันทึก</strong> — กราฟแสดง 2 เส้น (คอนโด vs ที่ทำงาน) เห็นพฤติกรรมว่าช่วงไหนถึงเร็วช่วงไหนถึงช้า</li>
+          <li><strong>📍 สัดส่วนสถานที่จอด</strong> — pie chart แสดงว่าจอดที่ไหนบ่อยที่สุด</li>
+          <li><strong>🅿️ ชั้นที่จอดบ่อยสุด</strong> — bar chart แสดงว่าที่คอนโดจอดชั้นไหนบ่อยที่สุด</li>
+          <li><strong>📊 จำนวนบันทึกรายวัน</strong> — timeline การใช้งานระบบ</li>
+          <li><strong>🔴 Live Data</strong> — ดึงข้อมูลจาก Google Sheets แบบ real-time ทุก 5 นาที</li>
+        </ul>
+
+        <div style="text-align: center; margin: 24px 0;">
+          <a href="https://natpakans-stack.github.io/carpark-live-dashboard/" target="_blank"
+             style="display: inline-block; padding: 12px 28px; background: linear-gradient(135deg, #2563eb, #1e40af); color: white; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 0.95rem;">
+            🚀 ดู Live Dashboard
+          </a>
+        </div>
+      </div>
+
+      <div class="insight-box">
+        <h4>💡 Insights ที่ได้จาก Dashboard</h4>
+        <ul>
+          <li><strong>รู้ว่าเราถึงที่ทำงานเฉลี่ยกี่โมง</strong> — ช่วยวางแผนว่าควรออกจากบ้านกี่โมงถึงจะไม่สาย</li>
+          <li><strong>เห็น pattern การจอดรถ</strong> — เช่น "ชั้น 3 จอดบ่อยสุดเพราะใกล้ลิฟต์" หรือ "ช่วงนี้จอดที่ทำงานบ่อยกว่าคอนโด"</li>
+          <li><strong>ตรวจสอบความ consistent</strong> — ถ้าเวลาที่ถึงแตกต่างกันมากแต่ละวัน อาจต้องปรับเวลาออกเดินทาง</li>
+          <li><strong>Data-driven decision</strong> — ตัดสินใจจากข้อมูลจริง ไม่ใช่จากความรู้สึก</li>
+        </ul>
+      </div>
+
+      <div class="creative-box">
+        <h4>🎨 Technical Implementation</h4>
+        <div class="creative-item">
+          <div class="ci-title">React + Recharts สำหรับ Data Visualization</div>
+          <div class="ci-desc">ใช้ React functional components + Recharts library สร้างกราฟ interactive (Line Chart, Pie Chart, Bar Chart) ที่ responsive ทุก device</div>
+        </div>
+        <div class="creative-item">
+          <div class="ci-title">Google Sheets เป็น "Free Database"</div>
+          <div class="ci-desc">Publish Sheets เป็น CSV URL แล้วใช้ PapaCSV parse → ไม่ต้องมี backend server, ไม่เสียค่าใช้จ่าย, แก้ไขข้อมูลได้ง่าย</div>
+        </div>
+        <div class="creative-item">
+          <div class="ci-title">Auto Refresh ทุก 5 นาที</div>
+          <div class="ci-desc">ใช้ setInterval ดึงข้อมูลใหม่ทุก 5 นาที → Dashboard แสดงข้อมูล real-time โดยไม่ต้อง refresh หน้าเว็บ</div>
+        </div>
+        <div class="creative-item">
+          <div class="ci-title">Light Theme + WCAG AAA Compliance</div>
+          <div class="ci-desc">ออกแบบ light theme ที่อ่านง่าย พร้อม contrast ratio ที่ผ่านมาตรฐาน WCAG 2.1 AA/AAA สำหรับทุกคน</div>
         </div>
       </div>
 
