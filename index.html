@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>วันนี้จอดรถที่ไหน? — Design Thinking Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8f9fb;
+      --surface: #ffffff;
+      --text: #1e293b;
+      --text-secondary: #475569;
+      --accent: #3b82f6;
+      --accent-dark: #1e40af;
+      --accent-light: #eff6ff;
+      --green: #10b981;
+      --green-light: #e8faf0;
+      --orange: #f59e0b;
+      --orange-light: #fffbeb;
+      --border: #e2e8f0;
+      --code-bg: #334155;
+      --code-text: #f1f5f9;
+      --tag-bg: #f1f5f9;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.08);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --max-w: 780px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'IBM Plex Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 50%, #93c5fd 100%);
+      color: #ffffff;
+      padding: 80px 24px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle at 70% 30%, rgba(255,255,255,0.06) 0%, transparent 50%);
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #f59e0b, #06c755, #3b82f6, #8b5cf6);
+    }
+    .hero-inner { position: relative; max-width: var(--max-w); margin: 0 auto; }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(10px);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+      color: #1e293b;
+    }
+    .hero h1 {
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+    .hero h1 .emoji { font-size: clamp(2rem, 5.5vw, 3rem); }
+    .hero p {
+      font-size: 1.05rem;
+      opacity: 0.9;
+      max-width: 580px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    .hero-link {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 12px 28px;
+      background: #ffffff;
+      backdrop-filter: blur(10px);
+      border: 2px solid #ffffff;
+      border-radius: 50px;
+      color: #1e40af;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+    .hero-link:hover {
+      background: #f0f9ff;
+      border-color: #f0f9ff;
+    }
+
+    /* ===== CONTAINER ===== */
+    .container {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    article { padding: 48px 0 80px; }
+
+    /* ===== SECTION ===== */
+    .section-intro {
+      margin: 48px 0 24px;
+    }
+    .section-intro:first-child { margin-top: 0; }
+    .section-intro h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .section-intro p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* ===== PAIN POINT CARD ===== */
+    .pain-card {
+      background: linear-gradient(135deg, #fee2e2, #fef2f2);
+      border: 2px solid #fca5a5;
+      border-radius: var(--radius);
+      padding: 28px 28px;
+      margin: 24px 0;
+    }
+    .pain-card h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #b91c1c;
+      margin-bottom: 12px;
+    }
+    .pain-list {
+      list-style: none;
+    }
+    .pain-list li {
+      position: relative;
+      padding: 6px 0 6px 28px;
+      font-size: 0.92rem;
+      color: #991b1b;
+      line-height: 1.65;
+    }
+    .pain-list li::before {
+      content: '✕';
+      position: absolute;
+      left: 0;
+      color: #dc2626;
+      font-weight: 700;
+    }
+
+    /* ===== DT STEPS ===== */
+    .dt-steps {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .dt-step {
+      background: #f8fafc;
+      border-left: 3px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+    .dt-step.green { border-left-color: var(--green); }
+    .dt-step.orange { border-left-color: var(--orange); }
+    .dt-step .step-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #1e40af;
+      margin-bottom: 4px;
+    }
+    .dt-step.green .step-label { color: #047857; }
+    .dt-step.orange .step-label { color: #c2410c; }
+    .dt-step .step-content {
+      font-size: 0.92rem;
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    /* ===== SOLUTION CARD ===== */
+    .solution-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin: 24px 0;
+      box-shadow: var(--shadow);
+    }
+    .solution-card h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .solution-card .subtitle {
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      margin-bottom: 20px;
+    }
+
+    /* ===== TAGS ===== */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .tag {
+      display: inline-block;
+      background: var(--tag-bg);
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 50px;
+      border: 1px solid var(--border);
+    }
+    .tag.blue { background: var(--accent-light); color: #1e40af; border-color: #bfdbfe; }
+    .tag.green { background: var(--green-light); color: #047857; border-color: #a7f3d0; }
+    .tag.orange { background: var(--orange-light); color: #c2410c; border-color: #fde68a; }
+
+    /* ===== FEATURES ===== */
+    .features { list-style: none; margin: 16px 0; }
+    .features li {
+      position: relative;
+      padding: 6px 0 6px 28px;
+      font-size: 0.95rem;
+    }
+    .features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* ===== FLOW DIAGRAM ===== */
+    .flow-section { margin: 32px 0; }
+    .flow-section h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .flow-diagram {
+      background: linear-gradient(135deg, #f0f9ff, #f0fdf4);
+      border: 1px solid #d1e7dd;
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      overflow-x: auto;
+    }
+
+    /* User Journey Flow */
+    .journey-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      align-items: center;
+    }
+    .journey-step {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      max-width: 520px;
+    }
+    .journey-num {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .journey-num.green { background: var(--green); }
+    .journey-num.orange { background: var(--orange); }
+    .journey-text {
+      font-size: 0.88rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .journey-text strong { color: var(--accent-dark); }
+    .journey-text .line-tag {
+      display: inline-block;
+      background: #06c755;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 1px 8px;
+      border-radius: 4px;
+      margin-left: 4px;
+    }
+    .journey-text .cal-tag {
+      display: inline-block;
+      background: #4285f4;
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 1px 8px;
+      border-radius: 4px;
+      margin-left: 4px;
+    }
+    .journey-connector {
+      width: 2px;
+      height: 20px;
+      background: #cbd5e1;
+      margin-left: 15px;
+    }
+
+    /* Architecture */
+    .arch-flow {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      justify-content: center;
+    }
+    .arch-flow .node {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+      text-align: center;
+    }
+    .arch-flow .node.highlight {
+      border-color: var(--accent);
+      background: var(--accent-light);
+      color: var(--accent-dark);
+      font-weight: 600;
+    }
+    .arch-flow .arrow {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+    .arch-flow .split {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .arch-flow .split .node {
+      font-size: 0.8rem;
+    }
+
+    /* ===== CODE BLOCK ===== */
+    .code-block {
+      background: var(--code-bg);
+      border-radius: var(--radius-sm);
+      padding: 20px 24px;
+      margin: 20px 0;
+      overflow-x: auto;
+      position: relative;
+    }
+    .code-block .code-label {
+      position: absolute;
+      top: 10px; right: 14px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .code-block pre {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: var(--code-text);
+      line-height: 1.7;
+      white-space: pre;
+      overflow-x: auto;
+    }
+    .code-block .comment { color: #6b7f99; }
+    .code-block .keyword { color: #c792ea; }
+    .code-block .string { color: #c3e88d; }
+    .code-block .func { color: #82aaff; }
+    .code-block .const-name { color: #f78c6c; }
+    .code-block .censored {
+      background: #475569;
+      color: #94a3b8;
+      padding: 1px 8px;
+      border-radius: 4px;
+      font-style: italic;
+      letter-spacing: 1px;
+    }
+
+    /* ===== FLEX PREVIEW ===== */
+    .flex-preview {
+      background: #e5ddd5;
+      border-radius: var(--radius);
+      padding: 24px;
+      margin: 24px 0;
+      display: flex;
+      justify-content: center;
+    }
+    .flex-card {
+      width: 300px;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      font-size: 0.82rem;
+    }
+    .flex-parking .fp-body {
+      padding: 20px;
+    }
+    .flex-parking .fp-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #222;
+      margin-bottom: 14px;
+    }
+    .flex-parking .fp-sep {
+      height: 1px;
+      background: #eee;
+      margin: 10px 0;
+    }
+    .flex-parking .fp-row {
+      display: flex;
+      align-items: baseline;
+      padding: 8px 0;
+    }
+    .flex-parking .fp-label {
+      color: #a8a8a8;
+      font-size: 0.75rem;
+      width: 55px;
+      flex-shrink: 0;
+    }
+    .flex-parking .fp-value {
+      color: #333;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    /* ===== WEBAPP PREVIEW (MOCKUP) ===== */
+    .webapp-preview {
+      margin: 24px 0;
+    }
+    .webapp-preview h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    .phone-frame {
+      background: #475569;
+      border-radius: 32px;
+      padding: 12px;
+      width: 280px;
+      margin: 0 auto;
+      box-shadow: var(--shadow-lg);
+    }
+    .phone-screen {
+      background: #fff;
+      border-radius: 22px;
+      overflow: hidden;
+    }
+    .phone-statusbar {
+      background: var(--accent);
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .phone-statusbar span {
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 600;
+    }
+    .phone-content {
+      padding: 20px 16px;
+    }
+    .phone-content .form-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .phone-content .form-field {
+      margin-bottom: 12px;
+    }
+    .phone-content .form-field label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+    .phone-content .form-field .input-mock {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.78rem;
+      color: var(--text);
+    }
+    .phone-content .form-field .input-mock.select::after {
+      content: ' ▾';
+      color: #94a3b8;
+    }
+    .phone-content .form-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px;
+      width: 100%;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-align: center;
+      margin-top: 8px;
+    }
+
+    /* ===== INSIGHT BOX ===== */
+    .insight-box {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin: 20px 0;
+    }
+    .insight-box h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #92400e;
+      margin-bottom: 8px;
+    }
+    .insight-box p, .insight-box li {
+      font-size: 0.9rem;
+      color: #92400e;
+      line-height: 1.7;
+    }
+    .insight-box ul {
+      list-style: none;
+      margin-top: 8px;
+    }
+    .insight-box ul li {
+      padding: 3px 0 3px 20px;
+      position: relative;
+    }
+    .insight-box ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: #c2410c;
+      font-weight: 700;
+    }
+
+    /* ===== CREATIVE BOX ===== */
+    .creative-box {
+      background: linear-gradient(135deg, #faf5ff, #eff6ff);
+      border: 1px solid #ddd6fe;
+      border-radius: var(--radius);
+      padding: 24px;
+      margin: 24px 0;
+    }
+    .creative-box h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #7c3aed;
+      margin-bottom: 12px;
+    }
+    .creative-item {
+      margin-bottom: 16px;
+    }
+    .creative-item:last-child { margin-bottom: 0; }
+    .creative-item .ci-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .creative-item .ci-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.65;
+    }
+
+    /* ===== RESULT METRICS ===== */
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      margin: 24px 0;
+    }
+    .metric-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .metric-card .num {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .metric-card .num.green { color: var(--green); }
+    .metric-card .num.orange { color: var(--orange); }
+    .metric-card .label {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    /* ===== LEARNINGS ===== */
+    .learning-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      margin: 24px 0;
+      box-shadow: var(--shadow);
+    }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      border: none;
+      height: 1px;
+      background: var(--border);
+      margin: 40px 0;
+    }
+
+    /* ===== FOOTER ===== */
+    .closing {
+      text-align: center;
+      padding: 48px 24px 64px;
+      border-top: 1px solid var(--border);
+      margin-top: 48px;
+    }
+    .closing h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .closing p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    .closing .stack-icons {
+      margin-top: 24px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .closing .stack-icon {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .hero { padding: 60px 20px 44px; }
+      .solution-card { padding: 24px 20px; }
+      .pain-card { padding: 20px; }
+      .phone-frame { width: 260px; }
+      .flex-card { width: 270px; }
+      .metrics { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">Portfolio — Side Project</div>
+      <h1><span class="emoji">🚗</span> วันนี้จอดรถที่ไหน?</h1>
+      <p>Web App บันทึกที่จอดรถ + แจ้งเตือนผ่าน Google Calendar + ส่ง LINE บอกคนที่บ้าน — เกิดจาก pain point จริงที่เจอทุกวัน</p>
+      <a href="https://tanplanet.info/carpark" target="_blank" class="hero-link">tanplanet.info/carpark</a>
+    </div>
+  </header>
+
+  <!-- ===== ARTICLE ===== -->
+  <article>
+    <div class="container">
+
+      <!-- ===== THE PROBLEM ===== -->
+      <div class="section-intro">
+        <h2>Pain Point ที่เจอจริง</h2>
+        <p>ปัญหาเล็กๆ ที่เกิดขึ้นทุกวัน แต่สร้างความรำคาญซ้ำแล้วซ้ำเล่า</p>
+      </div>
+
+      <div class="pain-card">
+        <h3>ลืมชั้นจอดรถ — ทั้งที่คอนโดและที่ทำงาน</h3>
+        <ul class="pain-list">
+          <li><strong>คอนโด</strong> — ไม่มีช่องจอดประจำ จอดไม่ตรงชั้นทุกวัน ลงลิฟต์มาแล้วจำไม่ได้ว่าจอดชั้นไหน</li>
+          <li><strong>ออฟฟิศ</strong> — ที่ทำงานอยู่ในห้างสรรพสินค้า ลานจอดรถหลายชั้น ทุกชั้นหน้าตาเหมือนกันหมด</li>
+          <li><strong>Google Maps "Save Parking"</strong> — เซฟตำแหน่งได้ แต่ไม่บอกว่าจอด <em>ชั้นไหน</em> ของตึก</li>
+          <li><strong>คนที่บ้านเป็นห่วง</strong> — ต้องพิมพ์บอกใน LINE ทุกครั้งว่าถึงแล้ว จอดชั้นไหน ซึ่งบางทีก็ลืมบอก</li>
+        </ul>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ===== DESIGN THINKING ===== -->
+      <div class="section-intro">
+        <h2>Design Thinking Process</h2>
+        <p>จาก pain point สู่ solution ที่ใช้งานจริงทุกวัน</p>
+      </div>
+
+      <div class="dt-steps">
+        <div class="dt-step">
+          <div class="step-label">1. Empathize</div>
+          <div class="step-content">
+            สังเกตตัวเอง: ทุกเช้าจอดรถที่คอนโด (ไม่มีช่องประจำ) ตอนเย็นกลับมาจำชั้นไม่ได้ ต้องเดินวนหาทุกชั้น
+            <br>ที่ทำงานก็เหมือนกัน ลานจอดห้างหลายชั้น ออกจากออฟฟิศทีก็ลืมทุกที
+            <br>นอกจากนี้ คนที่บ้านก็ถามทุกวันว่า "ถึงยัง?" ต้องพิมพ์ LINE บอกทุกครั้ง
+          </div>
+        </div>
+
+        <div class="dt-step">
+          <div class="step-label">2. Define</div>
+          <div class="step-content">
+            <strong>Problem Statement:</strong><br>
+            "ผู้ใช้ต้องการ (1) จำที่จอดรถได้ง่ายโดยไม่ต้องพึ่งความจำ (2) ได้รับแจ้งเตือนก่อนเวลาออก (3) แจ้งคนที่บ้านอัตโนมัติว่าถึงที่หมายแล้วจอดชั้นไหน — ทั้งหมดนี้ทำครั้งเดียวจบ"
+          </div>
+        </div>
+
+        <div class="dt-step green">
+          <div class="step-label">3. Ideate</div>
+          <div class="step-content">
+            <strong>Key Insight:</strong> "ไหนๆ ก็ต้องกดบันทึกชั้นที่จอดอยู่แล้ว ทำไมไม่ให้มัน <em>ทำทุกอย่างให้</em> ในคลิกเดียว?"
+            <br><br>
+            ไอเดีย: สร้าง Web App ฟอร์มง่ายๆ → กรอกสถานที่ + ชั้น + เวลาที่อยากให้เตือน → กดบันทึก → ระบบทำ 3 อย่างพร้อมกัน:
+            <br>1) บันทึกข้อมูลลง Google Sheets
+            <br>2) สร้าง Google Calendar event พร้อม popup reminder
+            <br>3) ส่ง LINE แจ้งคนที่บ้าน "ถึงแล้ว จอดชั้น X"
+          </div>
+        </div>
+
+        <div class="dt-step orange">
+          <div class="step-label">4. Prototype & Test</div>
+          <div class="step-content">
+            สร้าง webapp ด้วย Framer (no-code) เป็นหน้าฟอร์ม → เชื่อมกับ Google Sheets → เขียน Google Apps Script ทำ automation
+            <br><br>
+            <strong>ปัญหาที่พบตอน test:</strong>
+            <br>— Calendar event สร้างซ้ำเมื่อ LINE API ล้มเหลว (trigger retry ทำให้สร้าง event ซ้ำ)
+            <br>— เวลาคลาดเคลื่อนเพราะ timezone ไม่ตรง
+            <br>→ <strong>แก้:</strong> แยก try-catch Calendar กับ LINE, ใช้ status tracking (CAL_OK / LINE_FAIL / SENT), ใช้ RFC3339 + timezone
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ===== HOW IT WORKS ===== -->
+      <div class="section-intro">
+        <h2>User Journey — กดครั้งเดียว ได้ 3 อย่าง</h2>
+        <p>จากมุมมองผู้ใช้ ขั้นตอนทั้งหมดเสร็จใน 15 วินาที</p>
+      </div>
+
+      <div class="flow-diagram">
+        <div class="journey-flow">
+          <div class="journey-step">
+            <div class="journey-num">1</div>
+            <div class="journey-text">เปิด <strong>tanplanet.info/carpark</strong> บนมือถือ</div>
+          </div>
+          <div class="journey-connector"></div>
+          <div class="journey-step">
+            <div class="journey-num">2</div>
+            <div class="journey-text">เลือก <strong>สถานที่จอด</strong> (คอนโด / ออฟฟิศ) + กรอก <strong>ชั้น</strong></div>
+          </div>
+          <div class="journey-connector"></div>
+          <div class="journey-step">
+            <div class="journey-num">3</div>
+            <div class="journey-text">เลือก <strong>วัน/เวลา</strong> ที่อยากให้เตือน (เช่น 17:30)</div>
+          </div>
+          <div class="journey-connector"></div>
+          <div class="journey-step">
+            <div class="journey-num green">4</div>
+            <div class="journey-text">กด <strong>Submit</strong> → ข้อมูลบันทึกลง Google Sheets</div>
+          </div>
+          <div class="journey-connector"></div>
+          <div class="journey-step">
+            <div class="journey-num green">5</div>
+            <div class="journey-text">ระบบสร้าง <strong>Calendar event</strong> พร้อม popup เตือนก่อน 30 นาที <span class="cal-tag">Calendar</span></div>
+          </div>
+          <div class="journey-connector"></div>
+          <div class="journey-step">
+            <div class="journey-num green">6</div>
+            <div class="journey-text">ส่ง <strong>LINE Flex Card</strong> แจ้งคนที่บ้าน → "ถึงแล้ว จอดชั้น B2" <span class="line-tag">LINE</span></div>
+          </div>
+          <div class="journey-connector"></div>
+          <div class="journey-step">
+            <div class="journey-num orange">7</div>
+            <div class="journey-text">ถึงเวลา → มือถือ <strong>popup เตือน</strong> "รถจอดชั้น B2 ที่คอนโด" → ไม่ต้องจำเอง!</div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ===== SOLUTION DETAIL ===== -->
+      <div class="section-intro">
+        <h2>Technical Solution</h2>
+      </div>
+
+      <div class="solution-card">
+        <h3>Architecture</h3>
+        <p class="subtitle">Framer (Frontend) → Google Sheets (DB) → Google Apps Script (Logic) → Calendar + LINE (Output)</p>
+
+        <div class="tags">
+          <span class="tag blue">Framer</span>
+          <span class="tag blue">Google Sheets</span>
+          <span class="tag blue">Google Apps Script</span>
+          <span class="tag green">Google Calendar API</span>
+          <span class="tag green">LINE Messaging API</span>
+          <span class="tag orange">RFC3339 Timezone</span>
+          <span class="tag">Status Tracking</span>
+          <span class="tag">Error Recovery</span>
+        </div>
+
+        <div class="flow-diagram" style="margin-top: 20px;">
+          <div class="arch-flow">
+            <span class="node highlight">Framer Web App</span>
+            <span class="arrow">→</span>
+            <span class="node">Google Sheets</span>
+            <span class="arrow">→</span>
+            <span class="node highlight">GAS (every 1 min)</span>
+            <span class="arrow">→</span>
+            <div class="split">
+              <span class="node" style="border-color: #4285f4; color: #4285f4;">Google Calendar</span>
+              <span class="node" style="border-color: #06c755; color: #06c755;">LINE Push API</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Features -->
+        <ul class="features" style="margin-top: 20px;">
+          <li>Web App (Framer) — ฟอร์มกรอกข้อมูลง่ายๆ บนมือถือ ไม่ต้องลงแอป</li>
+          <li>Google Sheets เป็น database — ดู history ย้อนหลังได้ทุกเมื่อ</li>
+          <li>GAS Trigger ทุก 1 นาที — ตรวจ row ใหม่แล้วประมวลผลทันที</li>
+          <li>Google Calendar event + popup reminder 30 นาทีก่อนเวลาที่ตั้ง</li>
+          <li>LINE Flex Card ส่งแจ้งคนที่บ้านอัตโนมัติ</li>
+          <li>Status tracking (SENT / CAL_OK / LINE_FAIL) ป้องกัน Calendar สร้างซ้ำ</li>
+          <li>Retry mechanism — ถ้า LINE ล้มเหลว ระบบ retry อัตโนมัติทุกชั่วโมง</li>
+        </ul>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ===== WEBAPP + FLEX PREVIEW ===== -->
+      <div class="section-intro">
+        <h2>UI Preview</h2>
+        <p>Web App ฟอร์มที่ใช้กรอก + LINE Flex Card ที่ส่งไปถึงคนที่บ้าน</p>
+      </div>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 32px; justify-content: center; margin: 24px 0;">
+
+        <!-- Webapp Mockup -->
+        <div>
+          <div style="text-align: center; font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 12px;">Web App Form</div>
+          <div class="phone-frame">
+            <div class="phone-screen">
+              <div class="phone-statusbar"><span>tanplanet.info/carpark</span></div>
+              <div class="phone-content">
+                <div class="form-title">วันนี้จอดรถที่ไหน?</div>
+
+                <div class="form-field">
+                  <label>สถานที่จอด</label>
+                  <div class="input-mock select">คอนโด The Base</div>
+                </div>
+
+                <div class="form-field">
+                  <label>ชั้นที่จอด</label>
+                  <div class="input-mock">B2</div>
+                </div>
+
+                <div class="form-field">
+                  <label>วันที่ให้เตือน</label>
+                  <div class="input-mock">07/02/2026</div>
+                </div>
+
+                <div class="form-field">
+                  <label>เวลาให้เตือน</label>
+                  <div class="input-mock">17:30</div>
+                </div>
+
+                <div class="form-field">
+                  <label>โน้ต (optional)</label>
+                  <div class="input-mock" style="color: #94a3b8;">จอดใกล้ลิฟต์ฝั่งซ้าย</div>
+                </div>
+
+                <div class="form-btn">บันทึกที่จอดรถ</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LINE Flex Card -->
+        <div>
+          <div style="text-align: center; font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 12px;">LINE Flex Card ที่ส่งไปถึง</div>
+          <div class="flex-preview" style="margin: 0;">
+            <div class="flex-card flex-parking">
+              <div class="fp-body">
+                <div class="fp-title">🚗 ถึงคอนโด The Base แล้ว</div>
+                <div class="fp-sep"></div>
+                <div class="fp-row">
+                  <span class="fp-label">Note</span>
+                  <span class="fp-value">จอดใกล้ลิฟต์ฝั่งซ้าย</span>
+                </div>
+                <div class="fp-sep"></div>
+                <div class="fp-row">
+                  <span class="fp-label">Fl.</span>
+                  <span class="fp-value">B2</span>
+                </div>
+                <div class="fp-sep"></div>
+                <div class="fp-row">
+                  <span class="fp-label">Time</span>
+                  <span class="fp-value">07/02/2026 | 08:45</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <hr class="divider">
+
+      <!-- ===== CREATIVE / PROBLEM SOLVING ===== -->
+      <div class="section-intro">
+        <h2>Creative Problem Solving</h2>
+        <p>ปัญหาที่เจอระหว่างทำ และวิธีแก้ที่คิดขึ้นมา</p>
+      </div>
+
+      <div class="creative-box">
+        <h4>สิ่งที่คิดเพิ่มจาก pain point เดิม</h4>
+
+        <div class="creative-item">
+          <div class="ci-title">1 กด = 3 outputs (Calendar + LINE + Log)</div>
+          <div class="ci-desc">แทนที่จะแค่จดชั้น ก็ให้ระบบทำทุกอย่างในคลิกเดียว — สร้าง Calendar เตือน + ส่ง LINE บอกคนที่บ้าน + log ข้อมูลใน Sheets ดู history ย้อนหลังได้</div>
+        </div>
+
+        <div class="creative-item">
+          <div class="ci-title">"ไหนๆ ก็ต้องกด ทำให้ได้มากกว่าแค่จำชั้น"</div>
+          <div class="ci-desc">จุดเริ่มต้นแค่อยากจำชั้นจอดรถ แต่เมื่อคิดต่อก็เห็นว่า "ทุกวันต้องพิมพ์ LINE บอกคนที่บ้านอยู่แล้ว" เลยรวมเป็นฟีเจอร์เดียวกัน — กดบันทึกที่จอดรถ = แจ้งคนที่บ้านไปด้วยในตัว</div>
+        </div>
+      </div>
+
+      <div class="insight-box">
+        <h4>Technical Challenges & Solutions</h4>
+        <ul>
+          <li><strong>Calendar สร้างซ้ำ:</strong> เมื่อ LINE API ล้มเหลว trigger จะ retry → สร้าง event ซ้ำ → แก้โดยแยก try-catch + mark status "CAL_OK" ทันทีหลัง Calendar สำเร็จ</li>
+          <li><strong>Timezone คลาดเคลื่อน:</strong> GAS ใช้ UTC แต่ผู้ใช้กรอกเวลาไทย → แก้ด้วย RFC3339 format พร้อม timeZone: "Asia/Bangkok"</li>
+          <li><strong>LINE Retry:</strong> สร้าง retry mechanism แยก — มี trigger ทุกชั่วโมงหา row ที่ status = LINE_FAIL แล้วลองส่งใหม่</li>
+          <li><strong>Sheet เป็น Date object:</strong> timeReminder จาก Sheet มาเป็น Date object ไม่ใช่ string → เขียน normalizeTimeHM_() รองรับทั้ง Date, "HH:mm", "HH:mm:ss"</li>
+        </ul>
+      </div>
+
+      <!-- Code Snippets -->
+      <div class="code-block">
+        <span class="code-label">Google Apps Script — Core Logic</span>
+<pre><span class="comment">// Main: ตรวจ row ใหม่ → สร้าง Calendar + ส่ง LINE</span>
+<span class="keyword">function</span> <span class="func">syncParkingRows</span>() {
+  <span class="keyword">const</span> sheet = SpreadsheetApp.getActiveSpreadsheet()
+    .getSheetByName(<span class="string">"Sheet1"</span>);
+  <span class="keyword">const</span> rows = sheet.getRange(2, 1, lastRow - 1, 8).getValues();
+
+  <span class="keyword">for</span> (<span class="keyword">let</span> i = 0; i < rows.length; i++) {
+    <span class="keyword">const</span> p = <span class="func">mapSheetRowToPayload_</span>(rows[i]);
+
+    <span class="comment">// กันซ้ำ — ข้ามถ้าสร้าง Calendar แล้ว</span>
+    <span class="keyword">if</span> (p.status === <span class="string">"SENT"</span> || p.status === <span class="string">"CAL_OK"</span>) <span class="keyword">continue</span>;
+
+    <span class="comment">// ===== 1. สร้าง Calendar =====</span>
+    <span class="keyword">try</span> {
+      <span class="func">createCalendarEventWithPopupReminder_</span>(
+        calendarId, title, start, end, location, description
+      );
+      calendarOk = <span class="keyword">true</span>;
+    } <span class="keyword">catch</span> (e) { <span class="keyword">continue</span>; }
+
+    <span class="comment">// ===== 2. ส่ง LINE (แยก try-catch) =====</span>
+    <span class="keyword">try</span> {
+      <span class="keyword">const</span> flex = <span class="func">buildParkingFlexCard_</span>(p);
+      <span class="func">linePush_</span>(to, [flex]);  <span class="comment">// to = <span class="censored">CENSORED</span></span>
+      lineOk = <span class="keyword">true</span>;
+    } <span class="keyword">catch</span> (e) { lineErrorMsg = e.message; }
+
+    <span class="comment">// ===== 3. Mark Status ทันที =====</span>
+    sheet.getRange(rowNumber, 8)
+      .setValue(lineOk ? <span class="string">"SENT"</span> : <span class="string">`LINE_FAIL:${err}`</span>);
+  }
+}</pre>
+      </div>
+
+      <div class="code-block">
+        <span class="code-label">Google Apps Script — Calendar + Timezone Fix</span>
+<pre><span class="comment">// RFC3339 + timezone — กัน Calendar เวลาคลาดเคลื่อน</span>
+<span class="keyword">function</span> <span class="func">createCalendarEventWithPopupReminder_</span>(
+  calendarId, title, start, end, location, description
+) {
+  <span class="keyword">const</span> resource = {
+    summary: title,
+    location: location,
+    start: {
+      dateTime: <span class="func">toRfc3339_</span>(start),   <span class="comment">// "2026-02-07T17:30:00+07:00"</span>
+      timeZone: <span class="string">"Asia/Bangkok"</span>
+    },
+    end: {
+      dateTime: <span class="func">toRfc3339_</span>(end),
+      timeZone: <span class="string">"Asia/Bangkok"</span>
+    },
+    reminders: {
+      useDefault: <span class="keyword">false</span>,
+      overrides: [
+        { method: <span class="string">"popup"</span>, minutes: <span class="const-name">30</span> }
+      ]
+    }
+  };
+
+  Calendar.Events.insert(resource, calendarId);  <span class="comment">// <span class="censored">CALENDAR_ID CENSORED</span></span>
+}
+
+<span class="comment">// รองรับ Date / "HH:mm" / "HH:mm:ss" จาก Sheet</span>
+<span class="keyword">function</span> <span class="func">normalizeTimeHM_</span>(v) {
+  <span class="keyword">if</span> (v <span class="keyword">instanceof</span> Date) {
+    <span class="keyword">return</span> { hh: v.getHours(), mm: v.getMinutes() };
+  }
+  <span class="keyword">const</span> m = String(v).match(<span class="string">/^(\d{1,2}):(\d{2})/</span>);
+  <span class="keyword">if</span> (m) <span class="keyword">return</span> { hh: Number(m[1]), mm: Number(m[2]) };
+  <span class="keyword">return null</span>;
+}</pre>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ===== GOOGLE SHEETS DATA MODEL ===== -->
+      <div class="section-intro">
+        <h2>Data Model — Google Sheets</h2>
+        <p>แต่ละ row คือการจอดรถ 1 ครั้ง ระบบอ่านแล้วประมวลผลอัตโนมัติ</p>
+      </div>
+
+      <div class="solution-card" style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem;">
+          <thead>
+            <tr style="border-bottom: 2px solid var(--border);">
+              <th style="text-align: left; padding: 8px 10px; color: var(--text-secondary); font-weight: 600;">Column</th>
+              <th style="text-align: left; padding: 8px 10px; color: var(--text-secondary); font-weight: 600;">Field</th>
+              <th style="text-align: left; padding: 8px 10px; color: var(--text-secondary); font-weight: 600;">Description</th>
+              <th style="text-align: left; padding: 8px 10px; color: var(--text-secondary); font-weight: 600;">Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 8px 10px; font-weight: 600; color: var(--accent);">A</td>
+              <td style="padding: 8px 10px;"><code>Date</code></td>
+              <td style="padding: 8px 10px; color: var(--text-secondary);">Timestamp ที่กรอกฟอร์ม</td>
+              <td style="padding: 8px 10px;"><code>2026-02-07 08:45</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 8px 10px; font-weight: 600; color: var(--accent);">B</td>
+              <td style="padding: 8px 10px;"><code>timeReminder</code></td>
+              <td style="padding: 8px 10px; color: var(--text-secondary);">เวลาที่ต้องการให้เตือน</td>
+              <td style="padding: 8px 10px;"><code>17:30</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 8px 10px; font-weight: 600; color: var(--accent);">C</td>
+              <td style="padding: 8px 10px;"><code>parkingMap</code></td>
+              <td style="padding: 8px 10px; color: var(--text-secondary);">URL แผนที่ (optional)</td>
+              <td style="padding: 8px 10px; color: #94a3b8;">—</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 8px 10px; font-weight: 600; color: var(--accent);">D</td>
+              <td style="padding: 8px 10px;"><code>parkingFloor</code></td>
+              <td style="padding: 8px 10px; color: var(--text-secondary);">ชั้นที่จอด</td>
+              <td style="padding: 8px 10px;"><code>B2</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 8px 10px; font-weight: 600; color: var(--accent);">E</td>
+              <td style="padding: 8px 10px;"><code>note</code></td>
+              <td style="padding: 8px 10px; color: var(--text-secondary);">โน้ตเพิ่มเติม</td>
+              <td style="padding: 8px 10px;"><code>จอดใกล้ลิฟต์ฝั่งซ้าย</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 8px 10px; font-weight: 600; color: var(--accent);">F</td>
+              <td style="padding: 8px 10px;"><code>parkingLocation</code></td>
+              <td style="padding: 8px 10px; color: var(--text-secondary);">สถานที่จอด</td>
+              <td style="padding: 8px 10px;"><code>คอนโด</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 8px 10px; font-weight: 600; color: var(--accent);">G</td>
+              <td style="padding: 8px 10px;"><code>exitDateReminder</code></td>
+              <td style="padding: 8px 10px; color: var(--text-secondary);">วันที่ให้เตือน</td>
+              <td style="padding: 8px 10px;"><code>2026-02-07</code></td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 10px; font-weight: 600; color: var(--accent);">H</td>
+              <td style="padding: 8px 10px;"><code>status</code></td>
+              <td style="padding: 8px 10px; color: var(--text-secondary);">สถานะการประมวลผล</td>
+              <td style="padding: 8px 10px;"><code>SENT</code> / <code>CAL_OK</code> / <code>LINE_FAIL</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ===== STATUS FLOW ===== -->
+      <div class="section-intro">
+        <h2>Error Recovery Design</h2>
+        <p>ออกแบบ status tracking เพื่อป้องกัน Calendar ซ้ำ + retry LINE อัตโนมัติ</p>
+      </div>
+
+      <div class="flow-diagram">
+        <div class="journey-flow">
+          <div class="journey-step">
+            <div class="journey-num">1</div>
+            <div class="journey-text">Row ใหม่เข้ามา → status = <strong>(ว่าง)</strong></div>
+          </div>
+          <div class="journey-connector"></div>
+          <div class="journey-step">
+            <div class="journey-num green">2</div>
+            <div class="journey-text">Calendar สำเร็จ → status = <strong style="color:#059669;">CAL_OK</strong> (ถ้า LINE ยังไม่ส่ง)</div>
+          </div>
+          <div class="journey-connector"></div>
+          <div class="journey-step">
+            <div class="journey-num green">3a</div>
+            <div class="journey-text">LINE สำเร็จ → status = <strong style="color:#059669;">SENT</strong> → จบ</div>
+          </div>
+          <div class="journey-connector"></div>
+          <div class="journey-step">
+            <div class="journey-num" style="background: #ef4444;">3b</div>
+            <div class="journey-text">LINE ล้มเหลว → status = <strong style="color:#ef4444;">LINE_FAIL:error message</strong></div>
+          </div>
+          <div class="journey-connector"></div>
+          <div class="journey-step">
+            <div class="journey-num orange">4</div>
+            <div class="journey-text">Retry trigger (ทุก 1 ชม.) หา LINE_FAIL → ลองส่ง LINE ใหม่ → ถ้าสำเร็จ → <strong style="color:#059669;">SENT</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ===== RESULT ===== -->
+      <div class="section-intro">
+        <h2>ผลลัพธ์</h2>
+      </div>
+
+      <div class="metrics">
+        <div class="metric-card">
+          <div class="num">15s</div>
+          <div class="label">เวลาที่ใช้บันทึก<br>(จากเดิมต้องพิมพ์ LINE)</div>
+        </div>
+        <div class="metric-card">
+          <div class="num green">3</div>
+          <div class="label">outputs ต่อ 1 กด<br>(Sheets + Calendar + LINE)</div>
+        </div>
+        <div class="metric-card">
+          <div class="num orange">0</div>
+          <div class="label">ครั้งที่ลืมชั้นจอดรถ<br>(หลังใช้ระบบ)</div>
+        </div>
+        <div class="metric-card">
+          <div class="num">100%</div>
+          <div class="label">คนที่บ้านรับ LINE<br>ทุกครั้งที่บันทึก</div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ===== LEARNINGS ===== -->
+      <div class="section-intro">
+        <h2>สิ่งที่ได้เรียนรู้</h2>
+      </div>
+
+      <div class="learning-card">
+        <ul class="features">
+          <li><strong>Design Thinking เริ่มจากตัวเองได้</strong> — ปัญหาเล็กๆ ที่เจอทุกวัน (ลืมชั้นจอดรถ) พอคิดต่อกลายเป็น solution ที่ช่วยได้ทั้งตัวเองและคนที่บ้าน</li>
+          <li><strong>"1 action = multiple outputs"</strong> — กดครั้งเดียว ได้ทั้งบันทึก + เตือน + แจ้งคนที่บ้าน ช่วยลดขั้นตอนที่ต้องทำซ้ำทุกวัน</li>
+          <li><strong>Status Tracking สำคัญ</strong> — ถ้าไม่มี status tracking ระบบจะสร้าง Calendar ซ้ำเมื่อ LINE API ล้มเหลว ต้องคิดเรื่อง idempotency ตั้งแต่แรก</li>
+          <li><strong>Error Recovery ต้องออกแบบ</strong> — แยก try-catch + retry mechanism ทำให้ระบบ resilient โดยไม่ต้องมานั่งดูแลทุกวัน</li>
+          <li><strong>Timezone เป็นปัญหาคลาสสิก</strong> — GAS ใช้ UTC ภายใน แต่ผู้ใช้คิดเป็นเวลาไทย ต้อง explicit ทุก datetime operation</li>
+          <li><strong>No-code + code ผสมกันได้ดี</strong> — ใช้ Framer ทำ frontend (เร็ว สวย) + GAS ทำ backend logic (ฟรี มี trigger) เหมาะกับ side project</li>
+        </ul>
+      </div>
+
+      <!-- ===== CLOSING ===== -->
+      <div class="closing">
+        <h2>Tech Stack</h2>
+        <p>ผสม no-code (Framer) กับ code (GAS) เพื่อ ship ให้ไวที่สุด</p>
+        <div class="stack-icons">
+          <span class="stack-icon">Framer</span>
+          <span class="stack-icon">Google Apps Script</span>
+          <span class="stack-icon">Google Sheets</span>
+          <span class="stack-icon">Google Calendar API</span>
+          <span class="stack-icon">LINE Messaging API</span>
+          <span class="stack-icon">Flex Message</span>
+          <span class="stack-icon">RFC3339 / Timezone</span>
+        </div>
+      </div>
+
+    </div>
+  </article>
+
+</body>
+</html>
