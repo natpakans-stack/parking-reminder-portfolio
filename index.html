@@ -901,6 +901,11 @@
                 <div class="form-title">วันนี้จอดรถที่ไหน?</div>
 
                 <div class="form-field">
+                  <label>บันทึกแบบไหน?</label>
+                  <div class="input-mock select">ปกติ</div>
+                </div>
+
+                <div class="form-field">
                   <label>สถานที่จอด</label>
                   <div class="input-mock select">คอนโด The Base</div>
                 </div>
@@ -1129,11 +1134,17 @@
               <td style="padding: 8px 10px; color: var(--text-secondary);">วันที่ให้เตือน</td>
               <td style="padding: 8px 10px;"><code>2026-02-07</code></td>
             </tr>
-            <tr>
+            <tr style="border-bottom: 1px solid var(--border);">
               <td style="padding: 8px 10px; font-weight: 600; color: var(--accent);">H</td>
-              <td style="padding: 8px 10px;"><code>status</code></td>
-              <td style="padding: 8px 10px; color: var(--text-secondary);">สถานะการประมวลผล</td>
-              <td style="padding: 8px 10px;"><code>SENT</code> / <code>CAL_OK</code> / <code>LINE_FAIL</code></td>
+              <td style="padding: 8px 10px;"><code>NoteType</code></td>
+              <td style="padding: 8px 10px; color: var(--text-secondary);">โหมดการบันทึก</td>
+              <td style="padding: 8px 10px;"><code>SENT</code> / <code>กรอกย้อนหลัง</code></td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 10px; font-weight: 600; color: var(--accent);">I</td>
+              <td style="padding: 8px 10px;"><code>TimeUseTracking</code></td>
+              <td style="padding: 8px 10px; color: var(--text-secondary);">เวลาจริงที่ใช้ tracking (แยกจากเวลาเตือน)</td>
+              <td style="padding: 8px 10px;"><code>22:32</code> / <code>09:12</code></td>
             </tr>
           </tbody>
         </table>
@@ -1204,6 +1215,62 @@
 
       <hr class="divider">
 
+      <!-- ===== DUAL RECORDING MODE ===== -->
+      <div class="section-intro">
+        <h2>🔀 Iterate: Dual Recording Mode</h2>
+        <p>จาก "บันทึกได้แค่ตอนจอด" สู่ "กรอกย้อนหลังได้ + แยก Tracking Time ออกจาก Reminder Time"</p>
+      </div>
+
+      <div class="solution-card">
+        <h3>🔍 ปัญหาที่เจอ</h3>
+        <p class="subtitle">บางครั้งลืมกรอกตอนจอดรถ ต้องกรอกย้อนหลัง แต่ระบบเดิมต้องตั้งเวลาเตือนทุกครั้ง → เวลาที่เอาไป track ปนกับเวลาเตือน ข้อมูลไม่ตรง</p>
+
+        <div class="dt-step green" style="margin: 20px 0;">
+          <div class="step-label">Design Thinking: Iterate</div>
+          <div class="step-content">
+            <strong>Insight:</strong> "เวลาที่ใช้เตือน" กับ "เวลาที่ถึงจริง" คือคนละอย่าง — ต้องแยกออกจากกัน
+            <br><br>
+            <strong>Solution:</strong> เพิ่ม Dropdown "บันทึกแบบไหน?" แยก 2 โหมด + เพิ่ม column <code>TimeUseTracking</code> เก็บเวลาจริงที่ใช้ track แยกจากเวลาเตือน
+          </div>
+        </div>
+      </div>
+
+      <div class="flow-diagram">
+        <div class="journey-flow">
+          <div class="journey-step">
+            <div class="journey-num">1</div>
+            <div class="journey-text">เลือก <strong>"บันทึกแบบไหน?"</strong> → ปกติ / กรอกย้อนหลัง</div>
+          </div>
+          <div class="journey-connector"></div>
+          <div class="journey-step">
+            <div class="journey-num green">2a</div>
+            <div class="journey-text"><strong>โหมดปกติ</strong> — กรอกวันที่ + เวลาเตือน → ระบบตั้ง schedule ส่ง LINE + Calendar</div>
+          </div>
+          <div class="journey-connector"></div>
+          <div class="journey-step">
+            <div class="journey-num orange">2b</div>
+            <div class="journey-text"><strong>กรอกย้อนหลัง</strong> — กรอกเวลาที่ลืมบันทึก → ระบบบันทึก tracking เท่านั้น (ไม่ส่ง LINE)</div>
+          </div>
+          <div class="journey-connector"></div>
+          <div class="journey-step">
+            <div class="journey-num green">3</div>
+            <div class="journey-text"><code>TimeUseTracking</code> บันทึกเวลาจริงทั้ง 2 โหมด → Dashboard ดึงจาก column นี้เท่านั้น</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight-box">
+        <h4>💡 ผลลัพธ์ที่ได้</h4>
+        <ul>
+          <li><strong>ข้อมูลไม่ปนกัน</strong> — เวลาที่ใช้เตือน (timeReminder) แยกจากเวลาจริง (TimeUseTracking)</li>
+          <li><strong>กรอกย้อนหลังได้</strong> — ไม่ต้อง skip การบันทึกเพราะลืมกรอกตอนจอด</li>
+          <li><strong>Dashboard แม่นยำขึ้น</strong> — ใช้ TimeUseTracking เป็น source of truth ทุก chart/metric</li>
+          <li><strong>ไม่ยิง LINE ผิดโหมด</strong> — โหมดกรอกย้อนหลังไม่สร้าง Calendar + ไม่ส่ง LINE</li>
+        </ul>
+      </div>
+
+      <hr class="divider">
+
       <!-- ===== DATA DASHBOARD ===== -->
       <div class="section-intro">
         <h2>📊 Iterate: Analytics Dashboard</h2>
@@ -1235,7 +1302,7 @@
 
         <ul class="features" style="margin-top: 20px;">
           <li><strong>⏰ เวลาที่บันทึกเฉลี่ย</strong> — แสดงว่าถึงคอนโดโดยเฉลี่ยกี่โมง ถึงที่ทำงานกี่โมง แยกตามสถานที่ พร้อม filter สัปดาห์นี้ / เดือนนี้ / ทั้งหมด</li>
-          <li><strong>📈 Trend เวลาที่บันทึก</strong> — กราฟแสดง 2 เส้น (คอนโด vs ที่ทำงาน) เฉพาะวันจันทร์-ศุกร์ ใช้ Date column จริงจาก timestamp</li>
+          <li><strong>📈 Trend เวลาที่บันทึก</strong> — กราฟแสดง 2 เส้น (คอนโด vs ที่ทำงาน) เฉพาะวันจันทร์-ศุกร์ ใช้ <code>TimeUseTracking</code> เป็น source of truth</li>
           <li><strong>📍 สัดส่วนสถานที่จอด</strong> — pie chart แสดงว่าจอดที่ไหนบ่อยที่สุด</li>
           <li><strong>🅿️ ชั้นที่จอดบ่อยสุด</strong> — bar chart แสดงว่าที่คอนโดจอดชั้นไหนบ่อยที่สุด</li>
           <li><strong>📊 จำนวนบันทึกรายวัน</strong> — timeline การใช้งานระบบ วันที่ครบ 2 ครั้ง/วันแสดง ✓ เป็น visual indicator</li>
@@ -1317,7 +1384,7 @@
           <span class="stack-icon">Flex Message</span>
           <span class="stack-icon">RFC3339 / Timezone</span>
         </div>
-        <div style="margin-top: 24px; font-size: 0.75rem; color: var(--text-secondary); opacity: 0.6;">Portfolio v1.2.0 · Dashboard v1.5.0</div>
+        <div style="margin-top: 24px; font-size: 0.75rem; color: var(--text-secondary); opacity: 0.6;">Portfolio v1.3.0 · Dashboard v1.5.1</div>
       </div>
 
     </div>
