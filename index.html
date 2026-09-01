@@ -775,7 +775,207 @@
       .back-nav { top: 10px; left: 10px; padding: 6px 12px; font-size: 0.78rem; }
       .back-to-top { bottom: 16px; right: 16px; width: 40px; height: 40px; }
     }
-  </style>
+  
+    /* component-refresh v1 */
+
+    /* ============================================================
+       Component refresh — layout/token/ฟอนต์เดิมทั้งหมด
+       แก้เฉพาะ component ที่เป็น "การ์ดขาว + แถบสี + อีโมจิ" เรียงซ้ำ
+       เปลี่ยนเป็นรายการคั่นเส้นบาง + ไอคอน lucide
+       ============================================================ */
+
+    .ico { width: 17px; height: 17px; flex: none; stroke-width: 1.6; }
+
+    /* --- ปัญหา / วิธีแก้ : เลิกเป็นการ์ด --- */
+    .pain-grid, .solution-grid {
+      gap: 0;
+      border-top: 1px solid var(--border);
+    }
+    .pain-card, .solution-card {
+      background: none;
+      border: 0;
+      border-bottom: 1px solid var(--border);
+      border-radius: 0;
+      padding: 22px 0;
+      display: grid;
+      grid-template-columns: 20px minmax(0, 1fr);
+      gap: 0 14px;
+      align-items: start;
+    }
+    .pain-card .ico, .solution-card .ico { margin-top: 0.34em; }
+    .pain-card .ico { color: var(--red); }
+    .solution-card .ico { color: var(--accent); }
+    .pain-card h3, .solution-card h3 {
+      grid-column: 2; margin: 0;
+      font-size: 1rem; font-weight: 600; line-height: 1.55;
+    }
+    .pain-card p, .solution-card p { grid-column: 2; margin-top: 6px; line-height: 1.75; }
+
+    .pain-card:last-child, .solution-card:last-child,
+    .flow-step:last-child, .hack-card:last-child,
+    .plain li:last-child, .rung:last-child { border-bottom: 0; }
+
+    /* --- ขั้นตอน : เลิกเป็นการ์ดกลางจอ --- */
+    .flow-grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+      border-top: 1px solid var(--border);
+    }
+    .flow-step {
+      background: none;
+      border: 0;
+      border-bottom: 1px solid var(--border);
+      border-radius: 0;
+      padding: 18px 0;
+      text-align: left;
+      display: grid;
+      grid-template-columns: 26px 20px minmax(0, 1fr);
+      gap: 0 12px;
+      align-items: start;
+    }
+    .flow-step .step-num {
+      width: auto; height: auto; margin: 0;
+      background: none; color: var(--accent);
+      border-radius: 0; display: block;
+      font-size: 0.88rem; font-weight: 600; line-height: 1.7;
+      font-variant-numeric: tabular-nums;
+    }
+    .flow-step .ico { color: var(--text-muted); margin-top: 0.3em; }
+    .flow-step h4 { grid-column: 3; margin: 0; font-size: 0.95rem; font-weight: 600; line-height: 1.6; }
+    .flow-step p { grid-column: 3; font-size: 0.86rem; margin-top: 5px; line-height: 1.72; }
+
+    /* --- Hack : เลิกเป็นการ์ด + ป้ายสี --- */
+    .hack-grid { gap: 0; border-top: 1px solid var(--border); }
+    .hack-card {
+      background: none;
+      border: 0;
+      border-bottom: 1px solid var(--border);
+      border-radius: 0;
+      padding: 26px 0;
+      overflow: visible;
+    }
+    .hack-card::before {
+      position: static;
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 0;
+      border-radius: 0;
+      background: none !important;
+      color: var(--text-muted) !important;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+    }
+    .hack-card h3 {
+      padding-right: 0;
+      font-size: 1.05rem;
+      font-weight: 600;
+      line-height: 1.55;
+      display: grid;
+      grid-template-columns: 20px minmax(0, 1fr);
+      gap: 0 13px;
+      align-items: start;
+    }
+    .hack-card h3 .ico { color: var(--red); margin-top: 0.3em; }
+    .hack-card > p { margin-top: 8px; line-height: 1.75; }
+    .hack-card .highlight {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 0;
+      border-left: 2px solid var(--emerald);
+      background: var(--bg);
+      color: var(--text-secondary);
+      font-weight: 400;
+      line-height: 1.75;
+    }
+    .hack-card .highlight strong, .hack-card .highlight b { color: var(--text); font-weight: 600; }
+
+    /* --- ตัวเลขสรุป : เลิก gradient text --- */
+    .metric-card .num {
+      background: none;
+      -webkit-text-fill-color: currentColor;
+      color: var(--accent);
+    }
+
+    /* --- learning-card: ลดความเป็นการ์ด --- */
+    .learning-card {
+      background: none;
+      border: 0;
+      border-bottom: 1px solid var(--border);
+      border-radius: 0;
+      padding: 20px 0;
+      margin-bottom: 0;
+    }
+    .learning-card:last-of-type { border-bottom: 0; }
+
+    /* กล่องหมายเหตุ มีแถบสีด้านซ้าย — ใช้ class แทน inline style จะได้คุม padding ครบด้าน */
+    .learning-card.note {
+      background: var(--bg);
+      border: 0;
+      border-left: 3px solid var(--accent);
+      border-radius: 0;
+      padding: 18px 22px 20px;
+      margin: 22px 0 0;
+    }
+    .learning-card.note.ok { border-left-color: var(--emerald); }
+    .learning-card.note strong { display: block; margin-bottom: 6px; color: var(--accent-dark); }
+    .learning-card.note.ok strong { color: var(--emerald-dark); }
+    .learning-card.note p { margin-top: 0; }
+
+    /* --- ตารางเทียบทางเลือก (ของใหม่ ใช้ token เดิม) --- */
+    .ledger-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 20px; }
+    .ledger { width: 100%; border-collapse: collapse; font-size: 0.9rem; min-width: 520px; }
+    .ledger--wide { min-width: 780px; }
+    .ledger .num { width: 1%; white-space: nowrap; }
+    .ledger th {
+      text-align: left; font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted);
+      padding: 0 22px 10px 0; border-bottom: 1px solid var(--border); vertical-align: bottom;
+    }
+    .ledger td {
+      padding: 14px 22px 14px 0; border-bottom: 1px solid var(--border);
+      vertical-align: top; color: var(--text-secondary); line-height: 1.7;
+    }
+    .ledger td:first-child { color: var(--text); font-weight: 600; }
+    .ledger th:first-child, .ledger td:first-child { width: 22%; min-width: 120px; }
+    .ledger th:last-child, .ledger td:last-child { padding-right: 0; }
+    .ledger tr[data-picked] td { background: var(--accent-light); }
+    .ledger tr[data-picked] td:first-child { padding-left: 12px; }
+    .ledger tr[data-picked] td:last-child { padding-right: 12px; }
+    .ledger tr[data-picked] td:first-child { color: var(--accent-dark); }
+    .ledger .pick { display: inline-flex; white-space: nowrap; align-items: center; gap: 5px; color: var(--accent); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-left: 6px; }
+    .ledger .pick .ico { width: 13px; height: 13px; }
+
+    /* --- ลำดับการตัดสิน --- */
+    .ladder { border-top: 1px solid var(--border); margin-top: 20px; }
+    .rung {
+      display: grid; grid-template-columns: 1fr;
+      gap: 4px; padding: 14px 0; border-bottom: 1px solid var(--border);
+      align-items: baseline;
+    }
+    .rung .cond { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: var(--text); }
+    .rung .cond .ico { color: var(--text-muted); width: 15px; height: 15px; }
+    .rung .out { font-family: var(--mono); font-size: 0.82rem; color: var(--accent-dark); }
+    .rung .note { font-size: 0.82rem; color: var(--text-muted); line-height: 1.65; }
+    .rung.none .out { color: var(--text-muted); }
+
+    /* --- รายการธรรมดา มีไอคอนนำ --- */
+    .plain { list-style: none; border-top: 1px solid var(--border); margin-top: 20px; }
+    .plain li {
+      display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 0 14px;
+      padding: 16px 0; border-bottom: 1px solid var(--border);
+      font-size: 0.92rem; color: var(--text-secondary); line-height: 1.75;
+    }
+    .plain li .ico { color: var(--text-muted); margin-top: 0.32em; }
+    .plain li b { color: var(--text); font-weight: 600; }
+
+    @media (min-width: 700px) {
+      .rung { grid-template-columns: minmax(0, 1.1fr) 140px minmax(0, 1.2fr); gap: 0 20px; }
+    }
+
+    .hero-mark .ico { width: 34px; height: 34px; stroke-width: 1.5; color: var(--navy); }
+    .hero-badge .ico { width: 14px; height: 14px; }
+</style>
 </head>
 <body>
 
@@ -783,7 +983,7 @@
   <header class="hero">
     <div class="hero-inner">
       <div class="hero-badge">Portfolio — Side Project</div>
-      <h1><span class="emoji">🚗</span> วันนี้จอดรถที่ไหน?</h1>
+      <h1><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg> วันนี้จอดรถที่ไหน?</h1>
       <p>Web App บันทึกที่จอดรถ + แจ้งเตือนผ่าน Google Calendar + ส่ง LINE บอกคนที่บ้าน — เกิดจาก pain point จริงที่เจอทุกวัน</p>
       <a href="https://tanplanet.info/carpark" target="_blank" class="hero-link">tanplanet.info/carpark</a>
     </div>
@@ -1292,12 +1492,12 @@
 
       <!-- ===== DUAL RECORDING MODE ===== -->
       <div class="section-intro">
-        <h2>🔀 Iterate: Dual Recording Mode</h2>
+        <h2><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 14 4 4-4 4"/><path d="m18 2 4 4-4 4"/><path d="M2 18h1.973a4 4 0 0 0 3.3-1.7l5.454-8.6a4 4 0 0 1 3.3-1.7H22"/><path d="M2 6h1.972a4 4 0 0 1 3.6 2.2"/><path d="M22 18h-6.041a4 4 0 0 1-3.3-1.8l-.359-.45"/></svg> Iterate: Dual Recording Mode</h2>
         <p>จาก "บันทึกได้แค่ตอนจอด" สู่ "กรอกย้อนหลังได้ + แยก Tracking Time ออกจาก Reminder Time"</p>
       </div>
 
       <div class="solution-card">
-        <h3>🔍 ปัญหาที่เจอ</h3>
+        <h3><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg> ปัญหาที่เจอ</h3>
         <p class="subtitle">บางครั้งลืมกรอกตอนจอดรถ ต้องกรอกย้อนหลัง แต่ระบบเดิมต้องตั้งเวลาเตือนทุกครั้ง → เวลาที่เอาไป track ปนกับเวลาเตือน ข้อมูลไม่ตรง</p>
 
         <div class="dt-step green" style="margin: 20px 0;">
@@ -1335,7 +1535,7 @@
       </div>
 
       <div class="insight-box">
-        <h4>💡 ผลลัพธ์ที่ได้</h4>
+        <h4><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg> ผลลัพธ์ที่ได้</h4>
         <ul>
           <li><strong>ข้อมูลไม่ปนกัน</strong> — เวลาที่ใช้เตือน (timeReminder) แยกจากเวลาจริง (TimeUseTracking)</li>
           <li><strong>กรอกย้อนหลังได้</strong> — ไม่ต้อง skip การบันทึกเพราะลืมกรอกตอนจอด</li>
@@ -1348,12 +1548,12 @@
 
       <!-- ===== DATA DASHBOARD ===== -->
       <div class="section-intro">
-        <h2>📊 Iterate: Analytics Dashboard</h2>
+        <h2><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg> Iterate: Analytics Dashboard</h2>
         <p>จาก "แค่บันทึกข้อมูล" สู่ "เข้าใจพฤติกรรมตัวเอง" ผ่าน data visualization</p>
       </div>
 
       <div class="solution-card">
-        <h3>🔍 ทำไมต้องมี Dashboard?</h3>
+        <h3><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg> ทำไมต้องมี Dashboard?</h3>
         <p class="subtitle">หลังใช้งานไปสักพัก เริ่มสงสัยว่า "เราถึงที่ทำงานกี่โมงโดยเฉลี่ย?" "ถึงคอนโดกี่โมง?" — ข้อมูลมีอยู่ใน Google Sheets แล้ว แต่ไม่สามารถมองเห็น pattern ได้</p>
 
         <div class="dt-step green" style="margin: 20px 0;">
@@ -1377,12 +1577,12 @@
 
         <ul class="features" style="margin-top: 20px;">
           <li><strong>⏰ เวลาที่บันทึกเฉลี่ย</strong> — แสดงว่าถึงคอนโดโดยเฉลี่ยกี่โมง ถึงที่ทำงานกี่โมง แยกตามสถานที่ พร้อม filter สัปดาห์นี้ / เดือนนี้ / ทั้งหมด</li>
-          <li><strong>📈 Trend เวลาที่บันทึก</strong> — กราฟแสดง 2 เส้น (คอนโด vs ที่ทำงาน) เฉพาะวันจันทร์-ศุกร์ ใช้ <code>TimeUseTracking</code> เป็น source of truth</li>
-          <li><strong>📍 สัดส่วนสถานที่จอด</strong> — pie chart แสดงว่าจอดที่ไหนบ่อยที่สุด</li>
-          <li><strong>🅿️ ชั้นที่จอดบ่อยสุด</strong> — bar chart แสดงว่าที่คอนโดจอดชั้นไหนบ่อยที่สุด</li>
-          <li><strong>📊 จำนวนบันทึกรายวัน</strong> — timeline การใช้งานระบบ วันที่ครบ 2 ครั้ง/วันแสดง ✓ เป็น visual indicator</li>
-          <li><strong>📱 Mobile Responsive</strong> — ซ่อนคอลัมน์ที่ไม่จำเป็นบนมือถือ location badge ไม่ตัดบรรทัด</li>
-          <li><strong>🔴 Live Data</strong> — ดึงข้อมูลจาก Google Sheets แบบ real-time ทุก 5 นาที</li>
+          <li><strong><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 7h6v6"/><path d="m22 7-8.5 8.5-5-5L2 17"/></svg> Trend เวลาที่บันทึก</strong> — กราฟแสดง 2 เส้น (คอนโด vs ที่ทำงาน) เฉพาะวันจันทร์-ศุกร์ ใช้ <code>TimeUseTracking</code> เป็น source of truth</li>
+          <li><strong><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg> สัดส่วนสถานที่จอด</strong> — pie chart แสดงว่าจอดที่ไหนบ่อยที่สุด</li>
+          <li><strong><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9 17V7h4a3 3 0 0 1 0 6H9"/></svg> ชั้นที่จอดบ่อยสุด</strong> — bar chart แสดงว่าที่คอนโดจอดชั้นไหนบ่อยที่สุด</li>
+          <li><strong><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg> จำนวนบันทึกรายวัน</strong> — timeline การใช้งานระบบ วันที่ครบ 2 ครั้ง/วันแสดง ✓ เป็น visual indicator</li>
+          <li><strong><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg> Mobile Responsive</strong> — ซ่อนคอลัมน์ที่ไม่จำเป็นบนมือถือ location badge ไม่ตัดบรรทัด</li>
+          <li><strong><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/></svg> Live Data</strong> — ดึงข้อมูลจาก Google Sheets แบบ real-time ทุก 5 นาที</li>
         </ul>
 
         <div style="text-align: center; margin: 24px 0;">
@@ -1394,7 +1594,7 @@
       </div>
 
       <div class="insight-box">
-        <h4>💡 Insights ที่ได้จาก Dashboard</h4>
+        <h4><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg> Insights ที่ได้จาก Dashboard</h4>
         <ul>
           <li><strong>รู้ว่าเราถึงที่ทำงานเฉลี่ยกี่โมง</strong> — ช่วยวางแผนว่าควรออกจากบ้านกี่โมงถึงจะไม่สาย สามารถดูเป็นรายสัปดาห์/เดือนได้</li>
           <li><strong>เห็น pattern การจอดรถ</strong> — เช่น "ชั้น 3 จอดบ่อยสุดเพราะใกล้ลิฟต์" หรือ "ช่วงนี้จอดที่ทำงานบ่อยกว่าคอนโด"</li>
@@ -1405,7 +1605,7 @@
       </div>
 
       <div class="creative-box">
-        <h4>🎨 Technical Implementation</h4>
+        <h4><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></svg> Technical Implementation</h4>
         <div class="creative-item">
           <div class="ci-title">React + Recharts สำหรับ Data Visualization</div>
           <div class="ci-desc">ใช้ React functional components + Recharts library สร้างกราฟ interactive (Line Chart, Pie Chart, Bar Chart) ที่ responsive ทุก device</div>
@@ -1481,6 +1681,27 @@
     var btn=document.querySelector('.back-to-top');
     window.addEventListener('scroll',function(){btn.classList.toggle('visible',window.scrollY>300)},{passive:true});
 })();
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "ณัฐปคัลภ์ ศิริรัตน์ (Natpakan Sirirat) — Portfolio",
+      "item": "https://projects.tanplanet.info/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Parking Reminder",
+      "item": "https://projects.tanplanet.info/parking-reminder-portfolio/"
+    }
+  ]
+}
 </script>
 </body>
 </html>
